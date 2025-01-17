@@ -22,3 +22,29 @@ export const userList = async () => {
     });
 };
 
+export const getUser = async (id) => {
+    const token = localStorage.getItem('token'); // Ambil token dari Local Storage
+    return await axios.get(`${API_URL}/users/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`, // Tambahkan token ke header
+        },
+    });
+    
+};
+
+export const updateUser = async (id, userData) => {
+    const token = localStorage.getItem('token'); // Ambil token dari Local Storage
+    return await axios.put(`${API_URL}/users/${id}`, userData, {
+        headers: {
+            Authorization: `Bearer ${token}`, // Tambahkan token ke header
+        },
+    });
+};
+
+export const deleteUser = async (id) => {
+    const token = localStorage.getItem('token');
+    return await axios.delete(`${API_URL}/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+};
+

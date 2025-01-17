@@ -5,7 +5,7 @@ const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem('token'); // Ambil token dari Local Storage
 
     if (!token) {
-        return <Navigate to="/" replace />; // Arahkan ke login jika tidak ada token
+        return <Navigate to="/login" replace />; // Arahkan ke login jika tidak ada token
     }
 
     return children;

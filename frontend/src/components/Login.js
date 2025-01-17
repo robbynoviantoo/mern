@@ -16,7 +16,7 @@ const Login = () => {
             console.log(response.data);
             localStorage.setItem('token', response.data.token);
             // Arahkan ke halaman List User setelah login berhasil
-            navigate('/users');
+            navigate('/');
         } catch (err) {
             alert('Login failed. Please check your credentials.');
         }
