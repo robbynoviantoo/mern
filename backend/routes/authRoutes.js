@@ -1,20 +1,22 @@
-// backend/routes/authRoutes.js
-const express = require('express');
-const { registerUser, loginUser, getUsers, getUserById } = require('../controllers/authController');
-const authenticate = require('../middleware/authMiddleware');
+const express = require("express");
+const {
+  registerUser,
+  loginUser,
+  getUsers,
+  getUserById,
+  editUser,
+  deleteUser,
+} = require("../controllers/authController");
+const authenticate = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// Endpoint Registrasi
-router.post('/register', registerUser);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 
-// Endpoint Login
-router.post('/login', loginUser);
-
-// Endpoint Mendapatkan Semua Pengguna
-router.get('/users', authenticate , getUsers);
-
-// Endpoint Mendapatkan Pengguna Berdasarkan ID
-router.get('/users/:id', authenticate , getUserById);
+router.get("/users", authenticate, getUsers);
+router.get("/users/:id", authenticate, getUserById);
+router.put("/users/:id", authenticate, editUser);
+router.delete("/users/:id", authenticate, deleteUser);
 
 module.exports = router;

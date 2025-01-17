@@ -3,8 +3,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "../components/Login";
 import Register from "../components/Register";
-import UserList from "../components/UserList";
-import EditUser from "../components/EditUser";
+import UserList from "../components/User/UserList";
+import EditUser from "../components/User/EditUser";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRoutes = () => (

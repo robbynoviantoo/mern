@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from './Navbar';
+import Navbar from '../Navbar';
 import { toast, ToastContainer } from 'react-toastify'; // Import Toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS Toastify
 
@@ -58,9 +58,9 @@ const EditUser = () => {
         <div>
             <Navbar />
             <ToastContainer /> {/* Komponen untuk menampilkan notifikasi */}
-            <div className="min-h-screen bg-gray-100 p-6">
-                <h1 className="text-3xl font-bold text-center text-gray-700 mb-6">Edit User</h1>
-                <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <div className="min-h-screen bg-base-200 p-6">
+                <h1 className="text-3xl font-bold text-center mb-6">Edit User</h1>
+                <div className="max-w-4xl mx-auto bg-base-100 rounded-lg shadow-md p-6">
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-600">Name</label>
