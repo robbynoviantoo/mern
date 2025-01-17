@@ -19,9 +19,9 @@ const Navbar = () => {
     };
 
     return (
-        <div className="navbar flex mx-auto bg-base-100 max-w-screen-xl z-10 ">
+        <div className="navbar px-0 flex mx-auto bg-base-100 max-w-screen-xl z-10 ">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-xl">My App</a>
+                <a className=" text-xl">My App</a>
             </div>
             <div className="flex-none">
                 {/* Dropdown untuk Ganti Tema */}

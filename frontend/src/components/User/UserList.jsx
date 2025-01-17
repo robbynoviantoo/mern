@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { userList, deleteUser } from "../../api/authApi";
 import Navbar from "../Navbar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { toast, ToastContainer } from "react-toastify";
@@ -13,6 +13,15 @@ const MySwal = withReactContent(Swal);
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const location = useLocation(); // Akses state dari navigate
+  const successMessage = location.state?.successMessage;
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage); // Tampilkan pesan sukses
+    }
+  }, [successMessage]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -58,13 +67,13 @@ const UserList = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
       <ToastContainer />
-      <div className="min-h-screen bg-base-200 p-6">
+      <div className="flex-grow bg-base-200 p-6">
         <h1 className="text-3xl font-bold text-center mb-6">User List</h1>
         <div className="overflow-x-auto w-full max-w-screen-xl mx-auto bg-base-100 rounded-lg shadow-md">
-          <table className="table w-full">
+          <table className=" table w-full">
             <thead>
               <tr>
                 <th>No</th>
@@ -76,9 +85,6 @@ const UserList = () => {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="4">
-                    <Skeleton rows={3} columns={4} />
-                  </td>
                 </tr>
               ) : (
                 users.map((user, index) => (
