@@ -2,21 +2,20 @@ const express = require("express");
 const {
   registerUser,
   loginUser,
-  getUsers,
-  getUserById,
   editUser,
-  deleteUser,
 } = require("../controllers/authController");
 const authenticate = require("../middleware/authMiddleware");
+const upload = require("../middleware/upload");
 
 const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-
-router.get("/users", authenticate, getUsers);
-router.get("/users/:id", authenticate, getUserById);
-router.put("/users/:id", authenticate, editUser);
-router.delete("/users/:id", authenticate, deleteUser);
+router.put(
+  "/edit/:userId",
+  authenticate,
+  upload.single("profileImage"),
+  editUser
+);
 
 module.exports = router;

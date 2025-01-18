@@ -1,5 +1,5 @@
 // frontend/src/components/Login.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { loginUser } from '../api/authApi';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,13 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); // Hook untuk navigasi
+
+    useEffect(() =>{
+        const token =  localStorage.getItem('token');
+        if (token) {
+            navigate('/');
+        }
+    })
 
     const handleSubmit = async (e) => {
         e.preventDefault();

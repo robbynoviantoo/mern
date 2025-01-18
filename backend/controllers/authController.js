@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const cloudinary = require("../config/cloudinary");
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -32,65 +33,37 @@ const loginUser = async (req, res) => {
   }
 };
 
-const getUsers = async (req, res) => {
-  try {
-    const users = await User.find({}, "email _id name"); // Hanya ambil email dan ID
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+const editUser = async (req, res) => {
+  const { userId } = req.params;
+  const { name, email, password } = req.body;
+  let profileImage = req.body.profileImage;
 
-// Ambil data pengguna berdasarkan ID
-const getUserById = async (req, res) => {
-  const { id } = req.params;
   try {
-    const user = await User.findById(id, "email _id name");
+    const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+    if (name) user.name = name;
+    if (email) user.email = email;
 
-const editUser = async (req, res) => {
-  const { id } = req.params; // Ambil ID dari parameter URL
-  const { name, email, password } = req.body; // Data yang akan diupdate
-
-  try {
-    // Buat objek untuk menyimpan pembaruan
-    const updateData = { name, email };
-
-    // Jika password disertakan, hash password baru
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      updateData.password = hashedPassword;
+      user.password = hashedPassword;
     }
 
-    // Cari user berdasarkan ID dan update datanya
-    const user = await User.findByIdAndUpdate(id, updateData, {
-      new: true,
-      runValidators: true,
-    });
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      profileImage = result.secure_url;
+    }
 
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!req.file) {
+      profileImage = user.profileImage;
+    }
+
+    user.profileImage = profileImage;
+
+    await user.save();
 
     res.status(200).json({ message: "User updated successfully", user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const deleteUser = async (req, res) => {
-  const { id } = req.params; // Ambil ID dari parameter URL
-
-  try {
-    const user = await User.findByIdAndDelete(id);
-
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -99,8 +72,5 @@ const deleteUser = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-  getUsers,
-  getUserById,
   editUser,
-  deleteUser,
 };

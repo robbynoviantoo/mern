@@ -5,7 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { toast, ToastContainer } from "react-toastify";
-import Skeleton from "../skeleton/Skeleton";
 import "react-toastify/dist/ReactToastify.css";
 
 const MySwal = withReactContent(Swal);
@@ -71,7 +70,8 @@ const UserList = () => {
       <Navbar />
       <ToastContainer />
       <div className="flex-grow bg-base-200 p-6">
-        <h1 className="text-3xl font-bold text-center mb-6">User List</h1>
+        <div className="max-w-screen-xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">User List</h1>
         <div className="overflow-x-auto w-full max-w-screen-xl mx-auto bg-base-100 rounded-lg shadow-md">
           <table className=" table w-full">
             <thead>
@@ -114,6 +114,7 @@ const UserList = () => {
             </tbody>
           </table>
         </div>
+      </div>
       </div>
     </div>
   );
