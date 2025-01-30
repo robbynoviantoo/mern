@@ -13,16 +13,16 @@ const router = express.Router();
 // Membuat Todo baru
 router.post("/", authenticate, createTodo);
 
-// Mendapatkan semua Todos berdasarkan user
-router.get("/:userId", authenticate, getTodos);
+// Mendapatkan semua Todos berdasarkan user (gunakan user dari token)
+router.get("/", authenticate, getTodos);
 
-// Mengupdate Todo
+// Mengupdate Todo berdasarkan ID
 router.put("/:todoId", authenticate, updateTodo);
 
-// Menghapus Todo
+// Menghapus Todo berdasarkan ID
 router.delete("/:todoId", authenticate, deleteTodo);
 
-// Mengupdate urutan Todo
-router.put("/update-order", authenticate, updateTodoOrder);
+// Mengupdate urutan Todos
+router.put("/order/update", authenticate, updateTodoOrder);
 
 module.exports = router;

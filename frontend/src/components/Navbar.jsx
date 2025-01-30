@@ -19,7 +19,8 @@ const Navbar = () => {
     };
 
     return (
-        <div className="navbar px-0 flex mx-auto bg-base-100 max-w-screen-xl z-10 ">
+        <div className="navbar px-0 flex mx-auto bg-base-100 z-10 ">
+        <div className="container mx-auto px-4">
             <div className="flex-1">
                 <a className=" text-xl">Learning</a>
             </div>
@@ -53,6 +54,7 @@ const Navbar = () => {
                     Logout
                 </button>
             </div>
+        </div>
         </div>
     );
 };
