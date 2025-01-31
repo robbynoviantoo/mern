@@ -2,11 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { loginUser } from "../../api/authApi";
 import { Link, useNavigate } from "react-router-dom";
+import { THEMES } from "../../constants/index";
+import ThemeDropdown from "../Others/ThemeDropdown";
+import AnimatedButton from "../Others/AnimatedButton";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Hook untuk navigasi
+  const navigate = useNavigate();
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -15,6 +19,7 @@ const Login = () => {
     }
   }, []);
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,8 +32,14 @@ const Login = () => {
     }
   };
 
+  const changeTheme = (newTheme) => {
+    document.documentElement.setAttribute("data-theme", newTheme); // Ubah tema di HTML
+    localStorage.setItem("theme", newTheme); // Simpan tema di localStorage
+    setTheme(newTheme);
+  };
+  
   return (
-    <div className="flex items-center justify-center min-h-screen bg-base-100">
+    <div className="flex items-center justify-center min-h-screen bg-base-200 relative">
       <div className="w-full max-w-md p-8 space-y-4 bg-base-100 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -56,12 +67,7 @@ const Login = () => {
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            Login
-          </button>
+          <AnimatedButton onClick={handleSubmit}>Login</AnimatedButton>
         </form>
         <p className="text-sm text-center text-gray-600">
           Don't have an account?{" "}
@@ -69,6 +75,13 @@ const Login = () => {
             Register
           </Link>
         </p>
+        <div className="absolute bottom-4 right-4">
+          <ThemeDropdown
+            theme={theme}
+            changeTheme={changeTheme}
+            themes={THEMES}
+          />
+        </div>
       </div>
     </div>
   );
